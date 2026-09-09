@@ -2,9 +2,6 @@ package mcp
 
 import (
 	"os"
-	"path/filepath"
-
-	"github.com/ItsMe-RiiK/LocalWebxMCP/Backend/internal/config"
 )
 
 func schemaCatFile() map[string]interface{} {
@@ -28,7 +25,13 @@ func executeCatFile(req *Request, resp *Response) {
 		return
 	}
 
-	content, err := os.ReadFile(filepath.Join(config.StorageDir, filename))
+	safePath, err := safeStoragePath(filename)
+	if err != nil {
+		resp.Error = map[string]interface{}{"code": -32602, "message": "Invalid filename: " + err.Error()}
+		return
+	}
+
+	content, err := os.ReadFile(safePath)
 	if err != nil {
 		resp.Result = map[string]interface{}{
 			"content": []map[string]interface{}{{"type": "text", "text": "Error: File not found"}},

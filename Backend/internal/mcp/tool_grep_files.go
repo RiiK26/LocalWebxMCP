@@ -4,10 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"path/filepath"
 	"strings"
-
-	"github.com/ItsMe-RiiK/LocalWebxMCP/Backend/internal/config"
 )
 
 func schemaGrepFile() map[string]interface{} {
@@ -34,7 +31,13 @@ func executeGrepFile(req *Request, resp *Response) {
 		return
 	}
 
-	file, err := os.Open(filepath.Join(config.StorageDir, filename))
+	safePath, err := safeStoragePath(filename)
+	if err != nil {
+		resp.Error = map[string]interface{}{"code": -32602, "message": "Invalid filename: " + err.Error()}
+		return
+	}
+
+	file, err := os.Open(safePath)
 	if err != nil {
 		resp.Result = map[string]interface{}{
 			"content": []map[string]interface{}{{"type": "text", "text": "Error: File not found"}},

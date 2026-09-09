@@ -1,9 +1,12 @@
 package mcp
 
 import (
+	"crypto/rand"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"sync"
 )
 
 type Request struct {
@@ -11,8 +14,9 @@ type Request struct {
 	ID      int    `json:"id"`
 	Method  string `json:"method"`
 	Params  struct {
-		Name      string                 `json:"name"`
-		Arguments map[string]interface{} `json:"arguments"`
+		Name            string                 `json:"name"`
+		Arguments       map[string]interface{} `json:"arguments"`
+		ProtocolVersion string                 `json:"protocolVersion"`
 	} `json:"params"`
 }
 
@@ -21,6 +25,18 @@ type Response struct {
 	ID      int         `json:"id"`
 	Result  interface{} `json:"result,omitempty"`
 	Error   interface{} `json:"error,omitempty"`
+}
+
+// sessions tracks issued session IDs so we can validate them on
+// follow-up requests. A sync.Map is safe for concurrent AI clients.
+var sessions sync.Map
+
+const defaultProtocolVersion = "2024-11-05"
+
+func newSessionID() string {
+	b := make([]byte, 16)
+	_, _ = rand.Read(b)
+	return hex.EncodeToString(b)
 }
 
 // Handler acts as the main entry point for the AI client
@@ -49,8 +65,17 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	switch req.Method {
 	case "initialize":
+		version := req.Params.ProtocolVersion
+		if version == "" {
+			version = defaultProtocolVersion
+		}
+
+		sid := newSessionID()
+		sessions.Store(sid, true)
+		w.Header().Set("Mcp-Session-Id", sid)
+
 		resp.Result = map[string]interface{}{
-			"protocolVersion": "2024-11-05",
+			"protocolVersion": version,
 			"capabilities":    map[string]interface{}{"tools": map[string]interface{}{}},
 			"serverInfo":      map[string]interface{}{"name": "local-go-server", "version": "1.0.0"},
 		}

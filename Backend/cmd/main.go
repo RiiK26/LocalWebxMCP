@@ -29,6 +29,7 @@ func main() {
 
 	// --- AI MCP ROUTE ---
 	mux.HandleFunc("/mcp", mcp.Handler)
+	mux.HandleFunc("/mcp/", mcp.Handler)
 
 	// 3. Apply Security Middleware
 	secureMux := middleware.CORS(mux)
