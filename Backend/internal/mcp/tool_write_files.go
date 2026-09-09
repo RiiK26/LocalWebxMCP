@@ -2,9 +2,6 @@ package mcp
 
 import (
 	"os"
-	"path/filepath"
-
-	"github.com/ItsMe-RiiK/LocalWebxMCP/Backend/internal/config"
 )
 
 func schemaWriteFile() map[string]interface{} {
@@ -37,10 +34,14 @@ func executeWriteFile(req *Request, resp *Response) {
 		return
 	}
 
-	filePath := filepath.Join(config.StorageDir, filename)
+	filePath, err := safeStoragePath(filename)
+	if err != nil {
+		resp.Error = map[string]interface{}{"code": -32602, "message": "Invalid filename: " + err.Error()}
+		return
+	}
 
 	// 0644 means: Read/Write for owner, Read-only for others
-	err := os.WriteFile(filePath, []byte(content), 0644)
+	err = os.WriteFile(filePath, []byte(content), 0644)
 	if err != nil {
 		resp.Result = map[string]interface{}{
 			"content": []map[string]interface{}{{"type": "text", "text": "Error: Failed to write to file"}},
