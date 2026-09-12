@@ -3,7 +3,7 @@ package storage
 import (
 	"os"
 
-	"github.com/ItsMe-RiiK/LocalWebxMCP/Backend/internal/config"
+	"github.com/RiiK26/LocalWebxMCP/Backend/internal/config"
 )
 
 // Init creates the necessary storage directory if it doesn't exist

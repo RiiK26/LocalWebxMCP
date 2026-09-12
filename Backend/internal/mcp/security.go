@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/ItsMe-RiiK/LocalWebxMCP/Backend/internal/config"
+	"github.com/RiiK26/LocalWebxMCP/Backend/internal/config"
 )
 
 // ErrPathEscape is returned when a requested filename would resolve

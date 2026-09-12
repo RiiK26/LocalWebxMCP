@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ItsMe-RiiK/LocalWebxMCP/Backend/internal/config"
+	"github.com/RiiK26/LocalWebxMCP/Backend/internal/config"
 )
 
 func schemaFindFiles() map[string]interface{} {

@@ -5,11 +5,11 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/ItsMe-RiiK/LocalWebxMCP/Backend/internal/api"
-	"github.com/ItsMe-RiiK/LocalWebxMCP/Backend/internal/config"
-	"github.com/ItsMe-RiiK/LocalWebxMCP/Backend/internal/mcp"
-	"github.com/ItsMe-RiiK/LocalWebxMCP/Backend/internal/middleware"
-	"github.com/ItsMe-RiiK/LocalWebxMCP/Backend/internal/storage"
+	"github.com/RiiK26/LocalWebxMCP/Backend/internal/api"
+	"github.com/RiiK26/LocalWebxMCP/Backend/internal/config"
+	"github.com/RiiK26/LocalWebxMCP/Backend/internal/mcp"
+	"github.com/RiiK26/LocalWebxMCP/Backend/internal/middleware"
+	"github.com/RiiK26/LocalWebxMCP/Backend/internal/storage"
 )
 
 func main() {

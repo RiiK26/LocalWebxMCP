@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/ItsMe-RiiK/LocalWebxMCP/Backend/internal/config"
+	"github.com/RiiK26/LocalWebxMCP/Backend/internal/config"
 )
 
 // UploadHandler handles file uploads from the frontend

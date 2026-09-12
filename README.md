@@ -37,7 +37,7 @@ The built-in MCP server equips the AI with Linux-like commands to manage and ana
 ### 2. Installation
 Clone this repository to your local machine:
 ```bash
-git clone https://github.com/ItsMe-RiiK/LocalWebxMCP.git
+git clone https://github.com/RiiK26/LocalWebxMCP.git
 cd LocalWebxMCP
 ```
 
